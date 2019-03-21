@@ -1,4 +1,4 @@
 class UserSerializer < ActiveModel::Serializer
   attributes :id, :username
-  has_many :documents, serializer: DocumentSerializer
+  has_many :documents
 end
