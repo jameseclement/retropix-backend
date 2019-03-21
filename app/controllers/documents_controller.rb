@@ -6,7 +6,7 @@ before_action :get_user, except: [:create, :destroy]
   end
 
   def update
-    @document = Document.find(params[:document_id])
+    @document = Document.find(params[:id])
     @document.update(document_params)
     if @document.save
       render json: @document, status: :accepted
@@ -16,7 +16,7 @@ before_action :get_user, except: [:create, :destroy]
   end
 
   def destroy
-    Document.destroy(params[:document_id])
+    Document.destroy(params[:id])
   end
 
   def index
@@ -24,7 +24,7 @@ before_action :get_user, except: [:create, :destroy]
   end
 
   def show
-    @document = document.find(params[:document_id])
+    @document = Document.find(params[:id])
     render json: @document
   end
 
