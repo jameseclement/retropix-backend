@@ -1,22 +1,20 @@
 class VersionsController < ApplicationController
-  def new
-  end
-
   def create
-  end
-
-  def update
-  end
-
-  def edit
+    @version = Version.create!(version_params)
   end
 
   def destroy
-  end
-
-  def index
+    Version.destroy(params[:id])
   end
 
   def show
+    @version = Version.find(params[:id])
+    render json: @version
+  end
+
+  private
+
+  def version_params
+    params.permit(:data, :document_id)
   end
 end

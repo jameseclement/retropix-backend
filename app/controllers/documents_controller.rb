@@ -31,13 +31,10 @@ before_action :get_user, except: [:create, :destroy]
   private
 
   def document_params
-    params.require(:document).permit(:title, :user_id)
+    params.require(:document).permit(:title, :user_id, versions: [:id, :data])
   end
 
   def get_user
     @user = User.find(params[:user_id])
   end
-
-
-
 end
