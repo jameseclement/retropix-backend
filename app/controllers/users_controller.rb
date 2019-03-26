@@ -7,10 +7,11 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    render json: @user, status: 200
+    render json: @user, status: :accepted
   end
 
   def index
-    render json: User.all, status: 200
+    @users = User.select(:id, :username)
+    render json: @users.to_json, status: :accepted
   end
 end
