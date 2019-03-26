@@ -1,4 +1,9 @@
 class VersionsController < ApplicationController
+  def index
+    doc = Document.find(params[:document_id])
+    render json: doc.versions
+  end
+
   def create
     @version = Version.create!(version_params)
   end
