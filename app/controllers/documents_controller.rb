@@ -28,10 +28,16 @@ before_action :get_user, except: [:create, :destroy]
     render json: @document
   end
 
+  def revert
+    @document = Document.find(params[:document_id])
+    version_ids = @document.revert_version(params[:version_id])
+    render json: version_ids, status: 200
+  end
+
   private
 
   def document_params
-    params.require(:document).permit(:title, :user_id, versions: [:id, :data])
+    params.permit(:title, :user_id, :current_version, versions: [:id, :data])
   end
 
   def get_user

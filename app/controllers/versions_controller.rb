@@ -1,11 +1,12 @@
 class VersionsController < ApplicationController
   def index
     doc = Document.find(params[:document_id])
-    render json: doc.versions
+    render json: doc.versions, status: 200
   end
 
   def create
     @version = Version.create!(version_params)
+    render json: @version, status: 200
   end
 
   def destroy
@@ -14,7 +15,7 @@ class VersionsController < ApplicationController
 
   def show
     @version = Version.find(params[:id])
-    render json: @version
+    render json: @version, status: 200
   end
 
   private
