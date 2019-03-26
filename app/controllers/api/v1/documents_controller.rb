@@ -3,11 +3,10 @@ before_action :get_user, except: [:create, :destroy]
 
   def create
     @document = Document.create(document_params)
-    render json: @document, status: :accepted
   end
 
   def update
-    @document = Document.find(params[:id])
+    @document = Document.find(params[:document_id])
     @document.update(document_params)
     if @document.save
       render json: @document, status: :accepted
@@ -17,9 +16,7 @@ before_action :get_user, except: [:create, :destroy]
   end
 
   def destroy
-    doc = Document.find(params[:id])
-    doc.destroy()
-    render json: doc
+    Document.destroy(params[:document_id])
   end
 
   def index
@@ -27,23 +24,20 @@ before_action :get_user, except: [:create, :destroy]
   end
 
   def show
-    @document = Document.find(params[:id])
+    @document = document.find(params[:document_id])
     render json: @document
-  end
-
-  def revert
-    @document = Document.find(params[:document_id])
-    version_ids = @document.revert_version(params[:version_id])
-    render json: version_ids, status: 200
   end
 
   private
 
   def document_params
-    params.permit(:title, :user_id, :current_version, versions: [:id, :data])
+    params.require(:document).permit(:title, :user_id)
   end
 
   def get_user
     @user = User.find(params[:user_id])
   end
+
+
+
 end

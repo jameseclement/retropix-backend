@@ -1,10 +1,17 @@
 class Document < ApplicationRecord
   belongs_to :user
-  has_many :versions 
+  has_many :versions, dependent: :destroy
   accepts_nested_attributes_for :versions
 
   def current_version
-    self.versions.order("created_at ASC").last
+    version = self.versions.order("created_at ASC").last
+    if !version
+      return {id: nil, data: "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
+
+"}
+    else
+      return version
+    end
   end
 
   def revert_version(version_id)
